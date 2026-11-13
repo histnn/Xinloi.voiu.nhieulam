@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gửi Phương Vy 💌</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #ffd6e0, #ffeef2 50%, #e8d9ff);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .card {
+    background: #fff; border-radius: 24px; padding: 28px 24px;
+    width: min(92vw, 440px); max-height: 92vh; overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(255, 105, 140, .25);
+    position: relative; z-index: 2;
+  }
+  .card img { width: 180px; max-width: 60%; border-radius: 16px; margin-bottom: 14px; }
+  h1 { font-size: 1.4rem; color: #e0446a; margin-bottom: 10px; }
+  p  { color: #555; line-height: 1.6; margin-bottom: 8px; font-size: 1rem; }
+  .small { font-size: .85rem; color: #999; }
+  .btns { margin-top: 18px; display: flex; gap: 14px; justify-content: center; align-items: center; min-height: 52px; flex-wrap: wrap; }
+  button {
+    border: none; border-radius: 999px; padding: 12px 22px; font-size: 1rem;
+    cursor: pointer; font-weight: 600; transition: transform .15s;
+  }
+  #yes { background: #ff5c8a; color: #fff; font-size: 1.1rem; }
+  #yes:hover { transform: scale(1.08); }
+  #no  { background: #eee; color: #666; }
+  #letter { display: none; text-align: left; }
+  #letter h1 { text-align: center; }
+  #letter p { margin-bottom: 12px; }
+  .sign { text-align: right; font-style: italic; color: #e0446a; }
+  .heart { position: fixed; bottom: -30px; font-size: 22px; animation: rise linear forwards; z-index: 1; pointer-events: none; }
+  @keyframes rise { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+
+  #music {
+    position: fixed; top: 14px; right: 14px; z-index: 5;
+    width: 46px; height: 46px; padding: 0; font-size: 1.3rem;
+    background: #fff; box-shadow: 0 4px 14px rgba(255,105,140,.35);
+  }
+  #music.playing { animation: spin 3s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #songlink { display: none; margin-top: 10px; font-size: .85rem; }
+  #songlink a { color: #e0446a; }
+</style>
+</head>
+<body>
+
+<!-- Nhạc: đặt file nhạc tên music.mp3 cùng thư mục với index.html -->
+<audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+<button id="music" title="Bật/tắt nhạc">🎵</button>
+
+<div class="card">
+  <!-- Màn hình 1 -->
+  <div id="ask">
+    <img src="https://media.giphy.com/media/SVkhYVCi8fKPKvypi6/giphy.gif" alt="Mèo xin lỗi">
+    <h1>Phương Vy yêu dấu ơi 😭</h1>
+    <p>Vợ iuu ơi, cho em xin lỗi nhó.</p>
+    <p>Em biết vợ buồn vì em không chịu nói rõ ràng. Cho em một cơ hội để nói hết với vợ nha?</p>
+    <div class="btns" id="btns">
+      <button id="yes">Vợ cho em cơ hội 💗</button>
+      <button id="no">Không bao giờ</button>
+    </div>
+    <p class="small" id="hint"></p>
+    <p id="songlink">🎶 Nghe bài <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Xin+l%E1%BB%97i+t%C3%ACnh+y%C3%AAu+%C4%90%C3%A0m+V%C4%A9nh+H%C6%B0ng">Xin lỗi tình yêu</a> nhé</p>
+  </div>
+
+  <!-- Màn hình 2: lá thư -->
+  <div id="letter">
+    <h1>Gửi Phương Vy yêu dấu 💌</h1>
+    <p>Vợ iuu của em,</p>
+    <p>Em xin lỗi vì đã không chịu nói rõ ràng với vợ. Mỗi lần em im lặng hoặc nói vòng vo, vợ phải tự đoán và buồn một mình. Như vậy là không công bằng với vợ.</p>
+    <p>Em cũng nhận ra mình đã có lúc đổ lỗi, như thể chuyện đó là do vợ. Không phải vậy. Phần sai là của em, và em xin nhận lỗi, không biện minh nữa.</p>
+    <p>Em đã nói và làm quá đáng khiến vợ tổn thương. Em xin lỗi vợ thật lòng.</p>
+    <!-- ✏️ Có thể thêm 1 câu nói rõ chuyện hôm đó, ví dụ: "Hôm đó em đã nói ... , em không nên như vậy." -->
+    <p>Em xin vợ một cơ hội để sửa sai. Từ giờ, khi có chuyện, em sẽ nói thẳng và nhẹ nhàng, không đổ lỗi, và lắng nghe vợ nói hết trước khi nói ý mình.</p>
+    <p>Vì em yêu vợ nhiều lắm, Phương Vy ơi. 💗</p>
+    <p class="sign">— Em của vợ 🌷</p>
+  </div>
+</div>
+
+<script>
+  const yes = document.getElementById('yes');
+  const no = document.getElementById('no');
+  const hint = document.getElementById('hint');
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('music');
+  const songlink = document.getElementById('songlink');
+  const messages = [
+    "Bấm nhầm rồi đó 🙈", "Nút này hong bấm được đâu nha", "Vợ suy nghĩ lại đi mà 🥺",
+    "Em biết lỗi rồi mà 😭", "Cho em một cơ hội thôi nè 💗"
+  ];
+  let tries = 0;
+
+  /* ---- Nhạc ---- */
+  let musicOk = true;
+  bgm.addEventListener('error', () => { musicOk = false; songlink.style.display = 'block'; });
+  bgm.volume = 0.7;
+
+  function startMusic() {
+    if (!musicOk || !bgm.paused) return;
+    bgm.play().then(() => musicBtn.classList.add('playing')).catch(() => {});
+  }
+  musicBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!musicOk) { songlink.style.display = 'block'; return; }
+    if (bgm.paused) { bgm.play(); musicBtn.classList.add('playing'); }
+    else { bgm.pause(); musicBtn.classList.remove('playing'); }
+  });
+  document.addEventListener('pointerdown', startMusic, { once: true });
+
+  /* ---- Nút "Không bao giờ" chạy trốn ---- */
+  function dodge() {
+    tries++;
+    hint.textContent = messages[Math.min(tries - 1, messages.length - 1)];
+    no.style.position = 'fixed';
+    const w = window.innerWidth - no.offsetWidth - 20;
+    const h = window.innerHeight - no.offsetHeight - 20;
+    no.style.left = Math.max(10, Math.random() * w) + 'px';
+    no.style.top  = Math.max(10, Math.random() * h) + 'px';
+    yes.style.transform = 'scale(' + Math.min(1 + tries * 0.12, 1.8) + ')';
+  }
+  no.addEventListener('mouseenter', dodge);
+  no.addEventListener('touchstart', e => { e.preventDefault(); startMusic(); dodge(); });
+  no.addEventListener('click', dodge);
+
+  function hearts() {
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('span');
+      s.className = 'heart';
+      s.textContent = ['💗', '💖', '💕', '🌸'][i % 4];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDuration = 3 + Math.random() * 3 + 's';
+      s.style.animationDelay = Math.random() * 1.5 + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 7000);
+    }
+  }
+
+  yes.addEventListener('click', () => {
+    startMusic();
+    document.getElementById('ask').style.display = 'none';
+    no.style.display = 'none';
+    document.getElementById('letter').style.display = 'block';
+    hearts();
+  });
+</script>
+</body>
+</html>
